@@ -10,14 +10,14 @@ SampleNumber = 0.3;
 %簇个数不大于3
 ClusterNumber = 3;
 
-% load Data_Selected_Left.mat;
-% X = Data_Selected_Left;
+load Data_Selected_Left.mat;
+X = Data_Selected_Left;
 
 % load Data_Selected_Straight.mat;
 % X = Data_Selected_Straight;
 
-load Data_Selected_Right.mat;
-X = Data_Selected_Right;
+% load Data_Selected_Right.mat;
+% X = Data_Selected_Right;
 
 
 
@@ -66,7 +66,7 @@ for k = 1:1:84
 end
 
 %按照cophenet到小，注意检验簇数量和簇个数是否满足
-Min = ceil(SampleNumber*length(Data_Selected_Right));
+Min = ceil(SampleNumber*length(X));
 for k = 1:1:84
     
     Y = pdist(X,Distance_Method{Distances(k,1)});
