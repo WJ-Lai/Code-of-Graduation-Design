@@ -1,14 +1,14 @@
 clear;clc;
 
 
-load Data_Selected_Left.mat;
-X = Data_Selected_Left;
+% load Data_Selected_Left.mat;
+% X = Data_Selected_Left;
 
 % load Data_Selected_Straight.mat;
 % X = Data_Selected_Straight;
 
-% load Data_Selected_Right.mat;
-% X = Data_Selected_Right;
+load Data_Selected_Right.mat;
+X = Data_Selected_Right;
 
 
 
@@ -23,11 +23,11 @@ Best_way = zeros(12,7);
 for i = 1:12
     %i为7种Linkage_Method
     figure();
-    for j = 1:7
-        subplot(3,3,j)
+    for j = 1:3
+        subplot(2,2,j)
         Y = pdist(X,Distance_Method{i});
         %选择不同linkage方式
-        Z = linkage(Y,Linkage_Method{j});
+        Z = linkage(Y,Linkage_Method{j+4});
         %行对应Distance_Method，列对应Linkage_Method
         Best_way(i,j) = cophenet(Z,Y);
         H = dendrogram(Z,100);
