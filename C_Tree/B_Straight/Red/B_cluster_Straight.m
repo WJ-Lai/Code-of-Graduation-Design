@@ -1,4 +1,4 @@
-%聚类，并确定最佳分类个数（左转）
+%聚类，并确定最佳分类个数（直行）
 % Distance_Method = {'euclidean','squaredeuclidean','seuclidean','cityblock',...
 %     'minkowski','chebychev','mahalanobis','cosine','correlation','spearman',...
 %     'hamming','jaccard'};
@@ -7,21 +7,21 @@
 
 clear;clc;
 
-load Data_Selected_Left.mat;
-X = Data_Selected_Left;
+load Data_Selected_Straight.mat;
+X = Data_Selected_Straight;
 
-Y = pdist(X,'squaredeuclidean');%距离
-Z = linkage(Y,'weighted');%选方法
-cophenet(Z,Y)
+Y = pdist(X,'chebychev');%距离
+Z = linkage(Y, 'ward');%选方法
+cophenet(Z,Y);
 figure();
-H = dendrogram(Z,28);
+H = dendrogram(Z,100);
 set(H,'Color','k');
-title('聚类树形图（左转）','Fontsize',18);
+title('聚类树形图（直行）','Fontsize',18);
 xlabel('样本编号','Fontsize',14)
 ylabel('标准化距离（average）','Fontsize',14)
 
 %由inconsistent得出最佳分类个数
-%计算深度：50
+%计算深度：100
 W = inconsistent(Z,50);
 %计算增幅最多的聚类序号
 % d_inconsistent = zeros(max(size(W))-1,1);
@@ -32,11 +32,14 @@ d_inconsistent;
 
 %%
 %最佳分类个数为：2
-n = 3;
+%%
+%最佳分类个数为：4
+n = 2;
 clu = cluster(Z,n);
 cluA = 0;
 cluB = 0;
-cluC = 0;
+% cluC = 0;
+% cluD = 0;
 for i = 1:length(clu)
     if clu(i) == 1
         clu_n(i,1) = {'Cluster1'};
@@ -44,22 +47,25 @@ for i = 1:length(clu)
     elseif clu(i) == 2
         clu_n(i,1) = {'Cluster2'};
         cluB = cluB+1;
-    elseif clu(i) == 3
-        clu_n(i,1) = {'Cluster3'};
-        cluC = cluC+1;
+%     elseif clu(i) == 3
+%         clu_n(i,1) = {'Cluster3'};
+%         cluC = cluC+1;
 %   elseif clu(i) == 4
 %       clu_n(i,1) = {'Cluster4'};
+%       cluD = cluD+1;
     end
 end
 
 cluA
 cluB
-cluC
+% cluC
+% cluD
+
 %%
 %调和曲线
 figure();
 andrewsplot(X,'group',clu_n,'quantile',.25,'LineWidth',2)
-title('调和曲线（左转）','fontsize',16);
+title('调和曲线（右转）','fontsize',16);
 ylabel('f(t)');
 
 %%
@@ -67,18 +73,20 @@ ylabel('f(t)');
 
 
 %%
-%提取所得聚类，label为-11和-12
+%提取所得聚类，label为01，02
 for i = 1:length(clu)
     if clu(i) == 1
-        clu(i,1) = -11;
+        clu(i,1) = 01;
     elseif clu(i) == 2
-        clu(i,1) = -12;
-    elseif clu(i) == 3
-        clu(i,1) = -13;
+        clu(i,1) = 02;
+%     elseif clu(i) == 3
+%         clu(i,1) = 03;
+%     elseif clu(i) == 4
+%         clu(i,1) = 04;
     end
 end
 
-clu_Left = clu;
-ClusterData_Left = Data_Selected_Left;
-clearvars  -except ClusterData_Left clu_Left
-save Cluster_Left
+clu_Straight = clu;
+ClusterData_Straight = Data_Selected_Straight;
+clearvars  -except ClusterData_Straight clu_Straight
+save Cluster_Straight

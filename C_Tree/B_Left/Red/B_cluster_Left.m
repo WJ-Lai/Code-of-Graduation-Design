@@ -1,4 +1,4 @@
-%聚类，并确定最佳分类个数（右转）
+%聚类，并确定最佳分类个数（左转）
 % Distance_Method = {'euclidean','squaredeuclidean','seuclidean','cityblock',...
 %     'minkowski','chebychev','mahalanobis','cosine','correlation','spearman',...
 %     'hamming','jaccard'};
@@ -7,16 +7,16 @@
 
 clear;clc;
 
-load Data_Selected_Right.mat;
-X = Data_Selected_Right;
+load Data_Selected_Left.mat;
+X = Data_Selected_Left;
 
-Y = pdist(X,'jaccard');%距离
-Z = linkage(Y,'median');%选方法
+Y = pdist(X,'seuclidean');%距离
+Z = linkage(Y,'weighted');%选方法
 cophenet(Z,Y)
 figure();
-H = dendrogram(Z,35);
+H = dendrogram(Z,28);
 set(H,'Color','k');
-title('聚类树形图（右转）','Fontsize',18);
+title('聚类树形图（左转）','Fontsize',18);
 xlabel('样本编号','Fontsize',14)
 ylabel('标准化距离（average）','Fontsize',14)
 
@@ -32,12 +32,11 @@ d_inconsistent;
 
 %%
 %最佳分类个数为：2
-n = 3;
+n = 2;
 clu = cluster(Z,n);
 cluA = 0;
 cluB = 0;
-cluC = 0;
-% cluD = 0;
+% cluC = 0;
 for i = 1:length(clu)
     if clu(i) == 1
         clu_n(i,1) = {'Cluster1'};
@@ -45,25 +44,22 @@ for i = 1:length(clu)
     elseif clu(i) == 2
         clu_n(i,1) = {'Cluster2'};
         cluB = cluB+1;
-    elseif clu(i) == 3
-        clu_n(i,1) = {'Cluster3'};
-        cluC = cluC+1;
-%     elseif clu(i) == 4
-%         clu_n(i,1) = {'Cluster4'};
-%         cluD = cluD+1;
+%     elseif clu(i) == 3
+%         clu_n(i,1) = {'Cluster3'};
+%         cluC = cluC+1;
+%   elseif clu(i) == 4
+%       clu_n(i,1) = {'Cluster4'};
     end
 end
 
 cluA
 cluB
-cluC
-% cluD
-
+% cluC
 %%
 %调和曲线
 figure();
 andrewsplot(X,'group',clu_n,'quantile',.25,'LineWidth',2)
-title('调和曲线（右转）','fontsize',16);
+title('调和曲线（左转）','fontsize',16);
 ylabel('f(t)');
 
 %%
@@ -71,20 +67,18 @@ ylabel('f(t)');
 
 
 %%
-%提取所得聚类，label为11,12和13,14
+%提取所得聚类，label为-11和-12
 for i = 1:length(clu)
     if clu(i) == 1
-        clu(i,1) = 11;
+        clu(i,1) = -11;
     elseif clu(i) == 2
-        clu(i,1) = 12;
+        clu(i,1) = -12;
 %     elseif clu(i) == 3
-%         clu(i,1) = 13;
-%     elseif clu(i) == 4
-%         clu(i,1) = 14;
+%         clu(i,1) = -13;
     end
 end
 
-clu_Right = clu;
-ClusterData_Right = Data_Selected_Right;
-clearvars  -except ClusterData_Right clu_Right
-save Cluster_Right
+clu_Left = clu;
+ClusterData_Left = Data_Selected_Left;
+clearvars  -except ClusterData_Left clu_Left
+save Cluster_Left
