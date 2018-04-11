@@ -3,13 +3,13 @@ clc;clear;
 load('Cluster_Straight.mat');
 load('Cluster_Right.mat');
 load('Cluster_Left.mat');
-TexNnumber = 5;
-K = 10;
-finlVal = 10;
+TexNnumber = 3;
+K = 5;
+finlVal = 5;
 goin = 0.5;
 bujin = finlVal/goin;
 TreeNumber = 30;
-g = 0.5;
+g = 0.1;
 
 New = zeros(TexNnumber,bujin);
 Tradition = zeros(TexNnumber,bujin);
