@@ -49,7 +49,7 @@ end
 max(Best_way)
 max(ans)
 
-%矩阵中cophenet由大到小排列,并存放对应位置
+%矩阵中所有数据由大到小排列,并存放对应位置
 for k = 1:1:84
     
     %若没有系数相同的参数
@@ -57,15 +57,14 @@ for k = 1:1:84
         [Distances(k,1) Linkage(k,1)] = find(Best_way == max(max(Best_way)));
         Best_way(Distances(k,1),Linkage(k,1)) = 0;
     else 
+        Repeat = length(find(Best_way == max(max(Best_way))));
         [DistancesRepeat LinkageRepeat] = find(Best_way == max(max(Best_way)));
-        Distances(k,1) = DistancesRepeat(1,1);
-        Linkage(k,1) = LinkageRepeat(1,1);
-        Best_way(Distances(k,1),Linkage(k,1)) = 0;
+        
+        Best_way(DistancesRepeat(1,1),LinkageRepeat(1,1)) = 0;
     end
     
 end
 
-%按照cophenet到小，注意检验簇数量和簇个数是否满足
 Y = pdist(X,Distance_Method{11});
 Z = linkage(Y,Linkage_Method{3});
 H = dendrogram(Z,100);
