@@ -1,5 +1,5 @@
 %
-function [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean ] = NewKfold(k, Label, Data, c,g,TreeNumber)
+function [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean ] = NewKfold(k, Label, Data,c,g,TreeNumber)
 
     [m n] = size(Data);
     
@@ -35,7 +35,7 @@ function [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean ] = NewKfold(k
             end
         end
     
-    option = ['-c ' num2str(c) ' -g ',num2str(g),' -b 1'];
+    option = ['-c 2 -g ',num2str(g),' -b 1'];
     model = libsvmtrain(train_label ,train_data ,option);
     [predict_label, accuracy, scores]  = libsvmpredict(test_label, test_data , model, '-b 1'); 
     
