@@ -35,7 +35,7 @@ function [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean ] = Kfold(k, L
             end
         end
     
-    option = ['-c ',num2str(c),'-g',num2str(g),' -b 1'];
+    option = ['-c ',num2str(c),' -g ',num2str(g),' -b 1'];
     model = libsvmtrain(train_label ,train_data , option);
     [predict_label, accuracy, scores]  = libsvmpredict(test_label, test_data , model, '-b 1'); 
     AccuracySVM(1,i) = accuracy(1,1);
