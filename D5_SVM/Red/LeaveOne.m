@@ -1,52 +1,46 @@
 %
-function [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean ] = NewKfold(k, Label, Data, c,g,TreeNumber)
+function [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean ] = LeaveOne(Label, Data, c,g,TreeNumber)
 
     [m n] = size(Data);
     
-    %划分为k组
-    number = fix(m/k);      %每组数量number
-    SplitData = cell(2,k);
-    for i = 0:1:k-1
-        SplitData{1,i+1} = Data(1+i*number:number+i*number,:);
-        SplitData{2,i+1} = Label(1+i*number:number+i*number,:);
-        if i == k-1
-            SplitData{1,i+1} = Data(1+i*number:m,:);
-            SplitData{2,i+1} = Label(1+i*number:m,:);
-        end
+    %每个单独为1组，m组
+    SplitData = cell(2,m);
+    for i = 1:1:m
+        SplitData{1,i} = Data(i,:);
+        SplitData{2,i} = Label(i,:);
     end
     
     %轮流充当train和text组
-    AccuracySVM = zeros(1,k);%存放每次的准确率
-    AccuracyRF = zeros(1,k);
+    AccuracySVM = zeros(1,m);%存放每次的准确率
+    AccuracyRF = zeros(1,m);
     
 
     
-    for i = 1:1:k
+    for i = 1:1:m
         test_label = SplitData{2,i};
         test_data = SplitData{1,i};
         
         train_label = [];
         train_data = [];
         
-        for j = 1:1:k
+        for j = 1:1:m
             if j ~= i
                 train_label = [train_label;SplitData{2,j}];
                 train_data = [train_data;SplitData{1,j}];
             end
         end
     
+    %新label下预测
     option = ['-c ',num2str(c),' -g ',num2str(g),' -b 1'];
     model = libsvmtrain(train_label ,train_data ,option);
     [predict_label, accuracy, scores]  = libsvmpredict(test_label, test_data , model, '-b 1'); 
     
-    ProN = 5;
-    [a, b ] = sort(scores');
+    %转换为原始label
+    [max_pro, max_index ] = sort(scores','descend');
     [Row, Column] = size(scores);
-    max_pro = [a(Column,:)', a(Column-1,:)', a(Column-2,:)', a(Column-3,:)', a(Column-4,:)'];
-    max_index = [b(Column,:)', b(Column-1,:)', b(Column-2,:)', b(Column-3,:)', b(Column-4,:)'];
     patern = model.Label(max_index);
-    [result_patern patern_pro] = SVMPatern(max_pro,patern,ProN);
-    AccuracySVM(1,i) = Accuracy_New(test_label,result_patern)*100/number;
+    [result_patern patern_pro] = SVMPatern(max_pro,patern);
+    AccuracySVM(1,i) = Accuracy_New(test_label,result_patern);
     
     
     

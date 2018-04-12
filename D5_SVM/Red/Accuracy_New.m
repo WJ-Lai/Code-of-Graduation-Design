@@ -18,4 +18,6 @@ function  accuracy = Accuracy_New(test_label,result_patern)
        end
    end
    fprintf('Accuracy = %.4f%% (%d/%d) (Newclassification)\n',100*accuracy/length(test_label),accuracy,length(test_label))
+   accuracy = 100*accuracy/length(test_label);
+
 end

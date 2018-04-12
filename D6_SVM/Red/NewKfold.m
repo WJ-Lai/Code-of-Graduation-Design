@@ -39,13 +39,13 @@ function [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean ] = NewKfold(k
     model = libsvmtrain(train_label ,train_data ,option);
     [predict_label, accuracy, scores]  = libsvmpredict(test_label, test_data , model, '-b 1'); 
     
-    ProN = 5;
+
     [a, b ] = sort(scores');
     [Row, Column] = size(scores);
-    max_pro = [a(Column,:)', a(Column-1,:)', a(Column-2,:)', a(Column-3,:)', a(Column-4,:)'];
-    max_index = [b(Column,:)', b(Column-1,:)', b(Column-2,:)', b(Column-3,:)', b(Column-4,:)'];
+    max_pro = [a(Column,:)', a(Column-1,:)', a(Column-2,:)', a(Column-3,:)', a(Column-4,:)', a(Column-5,:)'];
+    max_index = [b(Column,:)', b(Column-1,:)', b(Column-2,:)', b(Column-3,:)', b(Column-4,:)', b(Column-5,:)'];
     patern = model.Label(max_index);
-    [result_patern patern_pro] = SVMPatern(max_pro,patern,ProN);
+    [result_patern patern_pro] = SVMPatern(max_pro,patern);
     AccuracySVM(1,i) = Accuracy_New(test_label,result_patern)*100/number;
     
     
