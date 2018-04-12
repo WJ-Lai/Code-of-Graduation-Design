@@ -3,7 +3,7 @@ clc;clear;
 load('Cluster_Straight.mat');
 load('Cluster_Right.mat');
 load('Cluster_Left.mat');
-TexNnumber = 5;
+TexNnumber = 10;
 K = 10;
 ini = 5
 finlVal = 100;

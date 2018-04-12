@@ -6,15 +6,15 @@ load('Cluster_Left.mat');
 TexNnumber = 3;
 
 c_ini = 0.5
-c_finlVal = 5;
+c_finlVal = 10;
 c_step = 0.5;
-c_stepnubmer = (c_finlVal-c_ini)/c_step + 1;
+c_stepnubmer = round((c_finlVal-c_ini)/c_step + 1);
 c = c_ini:c_step:c_finlVal;
 
 g_ini = 0.01
-g_finlVal = 0.1;
-g_step = 0.01;
-g_stepnubmer = (g_finlVal-g_ini)/g_step + 1;
+g_finlVal = 1.91;
+g_step = 0.1;
+g_stepnubmer = round((g_finlVal-g_ini)/g_step + 1);
 g = g_ini:g_step:g_finlVal;
 
 TreeNumber = 30;
@@ -35,23 +35,22 @@ for t = 1:1:TexNnumber
     Label = DataLabel_Random(:,1);
     Data = DataLabel_Random(:,2:n+1);
 
-    j = g_stepnubmer;
     for i = 1:1:c_stepnubmer 
-%         for j = 1:1:g_stepnubmer 
+        for j = 1:1:g_stepnubmer 
             [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean] = LeaveOne(Label, Data, c(1,i),g(1,j),TreeNumber);
-%             NewAcc(i,j) = NewAcc(i,j) + AccuracySVM_mean;
+            NewAcc(i,j) = NewAcc(i,j) + AccuracySVM_mean;
             compare(1,i) = AccuracySVM_mean;
-%         end
+        end
     end  
 
     %传统方法
     Label = LabelRecovery(Label)
     for i = 1:1:c_stepnubmer 
-%         for j = 1:1:g_stepnubmer 
+        for j = 1:1:g_stepnubmer 
             [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean] = LeaveOne_old(Label, Data, c(1,i),g(1,j),TreeNumber);
-%             OldAcc(i,j) = OldAcc(i,j) + AccuracySVM_mean;
+            OldAcc(i,j) = OldAcc(i,j) + AccuracySVM_mean;
             compare(2,i) = AccuracySVM_mean;
-%         end
+        end
     end
    
     New(t,:) = compare(1,:);
@@ -63,30 +62,30 @@ end
 %%
 %绘图
 
-% NewAcc = NewAcc/TexNnumber;
-% OldAcc = OldAcc/TexNnumber;
-% Compare = NewAcc - OldAcc;
-% 
-% figure()
-% [C1,h1] = contour(c,g,NewAcc);
-% clabel(C1,h1);
-% xlabel('惩罚系数c','fontsize',15)
-% ylabel('gamma系数','fontsize',15)
-% title('新方法参数寻优','fontsize',18);
-% 
-% figure()
-% [C2,h2] = contour(c,g,OldAcc);
-% clabel(C2,h2);
-% xlabel('惩罚系数c','fontsize',15)
-% ylabel('gamma系数','fontsize',15)
-% title('传统方法参数寻优','fontsize',18);
-% 
-% figure()
-% [C3,h3] = contour(c,g,Compare);
-% clabel(C3,h3);
-% xlabel('惩罚系数c','fontsize',15)
-% ylabel('gamma系数','fontsize',15)
-% title('新旧方法差值','fontsize',18);
+NewAcc = NewAcc/TexNnumber;
+OldAcc = OldAcc/TexNnumber;
+Compare = NewAcc - OldAcc;
+
+figure()
+[C1,h1] = contour(c,g,NewAcc);
+clabel(C1,h1);
+xlabel('惩罚系数c','fontsize',15)
+ylabel('gamma系数','fontsize',15)
+title('新方法参数寻优','fontsize',18);
+
+figure()
+[C2,h2] = contour(c,g,OldAcc);
+clabel(C2,h2);
+xlabel('惩罚系数c','fontsize',15)
+ylabel('gamma系数','fontsize',15)
+title('传统方法参数寻优','fontsize',18);
+
+figure()
+[C3,h3] = contour(c,g,Compare);
+clabel(C3,h3);
+xlabel('惩罚系数c','fontsize',15)
+ylabel('gamma系数','fontsize',15)
+title('新旧方法差值','fontsize',18);
 
 figure();
 NewMean = mean(New);

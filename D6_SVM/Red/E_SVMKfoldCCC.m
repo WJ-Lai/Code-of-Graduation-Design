@@ -4,18 +4,24 @@ load('Cluster_Straight.mat');
 load('Cluster_Right.mat');
 load('Cluster_Left.mat');
 TexNnumber = 5;
-K = 10;
+K = 5;
 
-c_ini = 0.5
+c_ini = 0.5;
 c_finlVal = 10;
 c_step = 0.5;
-c_stepnubmer = (c_finlVal-c_ini)/c_step + 1;
+c_stepnubmer = round((c_finlVal-c_ini)/c_step + 1);
 c = c_ini:c_step:c_finlVal;
 
-g_ini = 0.01
-g_finlVal = 0.2;
-g_step = 0.01;
-g_stepnubmer = (g_finlVal-g_ini)/g_step + 1;
+% g_ini = 0.01
+% g_finlVal = 1.91;
+% g_step = 0.1;
+% g_stepnubmer = round((g_finlVal-g_ini)/g_step + 1);
+% g = g_ini:g_step:g_finlVal;
+
+g_ini = 0.5;
+g_finlVal = 10;
+g_step = 0.5;
+g_stepnubmer = round((g_finlVal-g_ini)/g_step + 1);
 g = g_ini:g_step:g_finlVal;
 
 TreeNumber = 30;
