@@ -4,7 +4,7 @@ load('Cluster_Straight.mat');
 load('Cluster_Right.mat');
 load('Cluster_Left.mat');
 TexNnumber = 10;
-K = 5;
+K = 10;
 
 c_ini = 0.5
 c_finlVal = 5;
