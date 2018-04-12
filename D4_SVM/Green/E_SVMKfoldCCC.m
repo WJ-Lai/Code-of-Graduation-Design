@@ -34,15 +34,19 @@ for t = 1:1:TexNnumber
 
 
     for i = 1:1:c_stepnubmer 
-            [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean] = NewKfold(K, Label, Data, c(1,i),g,TreeNumber);
+        for j = 1:1:g_stepnubmer 
+            [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean] = NewKfold(K, Label, Data, c(1,i),g(1,i),TreeNumber);
             compare(1,i) = AccuracySVM_mean;
+        end
     end  
 
     %传统方法
     Label = LabelRecovery(Label)
     for i = 1:1:c_stepnubmer 
-        [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean] = Kfold(K, Label, Data, c(1,i),g,TreeNumber);
-        compare(2,i) = AccuracySVM_mean;
+        for j = 1:1:g_stepnubmer 
+            [AccuracySVM AccuracySVM_mean AccuracyRF AccuracyRF_mean] = Kfold(K, Label, Data, c(1,i),g(1,i),TreeNumber);
+            compare(2,i) = AccuracySVM_mean;
+        end
     end
    
     New(t,:) = compare(1,:);
