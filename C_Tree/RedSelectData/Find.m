@@ -10,11 +10,11 @@ SampleNumber = 0.3;
 %簇个数不大于3
 ClusterNumber = 3;
 
-% load Data_Selected_Left.mat;
-% X = Data_Selected_Left;
+load Data_Selected_Left.mat;
+X = Data_Selected_Left;
 
-load Data_Selected_Straight.mat;
-X = Data_Selected_Straight;
+% load Data_Selected_Straight.mat;
+% X = Data_Selected_Straight;
 
 % load Data_Selected_Right.mat;
 % X = Data_Selected_Right;

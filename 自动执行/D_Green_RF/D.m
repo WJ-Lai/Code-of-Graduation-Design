@@ -60,5 +60,5 @@ legend('新RF','传统RF');
 xlabel('树数量','fontsize',15)
 ylabel('准确率（%）','fontsize',15)
 title('树数量对准确率的影响','fontsize',18);
-
+save data
 end

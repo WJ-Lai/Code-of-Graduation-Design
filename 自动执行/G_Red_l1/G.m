@@ -99,5 +99,5 @@ legend('新SVM','传统SVM');
 xlabel('惩罚系数c','fontsize',15)
 ylabel('准确率（%）','fontsize',15)
 title('惩罚系数c对准确率的影响','fontsize',18);
-
+save data
 end
