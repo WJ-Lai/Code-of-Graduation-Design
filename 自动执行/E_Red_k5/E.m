@@ -58,7 +58,11 @@ for t = 1:1:TexNnumber
    
     New(t,:) = compare(1,:);
     Tradition(t,:) = compare(2,:);
-    
+
+    clear DataLabel;
+    load('Cluster_Straight.mat');
+    load('Cluster_Right.mat');
+    load('Cluster_Left.mat');
 end
 
 
