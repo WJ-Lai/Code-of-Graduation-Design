@@ -6,15 +6,15 @@ clear;clc;
 Distances = zeros(84,1);
 Linkage = zeros(84,1);
 %每个簇样本数量不低于30%
-SampleNumber = 0.3;
+SampleNumber = 0.25;
 %簇个数不大于3
 ClusterNumber = 3;
 
-load Data_Selected_Left.mat;
-X = Data_Selected_Left;
+% load Data_Selected_Left.mat;
+% X = Data_Selected_Left;
 
-% load Data_Selected_Straight.mat;
-% X = Data_Selected_Straight;
+load Data_Selected_Straight.mat;
+X = Data_Selected_Straight;
 
 % load Data_Selected_Right.mat;
 % X = Data_Selected_Right;

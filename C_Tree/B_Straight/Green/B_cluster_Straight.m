@@ -14,11 +14,12 @@ Y = pdist(X,'correlation');%距离
 Z = linkage(Y,'average');%选方法
 cophenet(Z,Y);
 figure();
-H = dendrogram(Z,100);
+H = dendrogram(Z,40);
 set(H,'Color','k');
-title('聚类树形图（直行）','Fontsize',18);
-xlabel('样本编号','Fontsize',14)
-ylabel('标准化距离（average）','Fontsize',14)
+set(gca,'FontSize',15);
+xlabel('样本编号','Fontsize',24)
+ylabel('标准化距离','Fontsize',24)
+
 
 %由inconsistent得出最佳分类个数
 %计算深度：100
@@ -46,7 +47,7 @@ for i = 1:length(clu)
         cluA = cluA+1;
     elseif clu(i) == 2
         clu_n(i,1) = {'Cluster2'};
-        cluB = cluB+1;
+%         cluB = cluB+1;
 %     elseif clu(i) == 3
 %         clu_n(i,1) = {'Cluster3'};
 %         cluC = cluC+1;
@@ -64,9 +65,10 @@ cluB
 %%
 %调和曲线
 figure();
-andrewsplot(X,'group',clu_n,'quantile',.25,'LineWidth',2)
-title('调和曲线（右转）','fontsize',16);
-ylabel('f(t)');
+andrewsplot(X,'group',clu_n,'quantile',.25,'LineWidth',2);
+set(gca,'FontSize',17);
+xlabel('t','Fontsize',18)
+ylabel('f(t)','Fontsize',18)
 
 %%
 %折线图

@@ -16,9 +16,10 @@ cophenet(Z,Y)
 figure();
 H = dendrogram(Z,28);
 set(H,'Color','k');
-title('聚类树形图（左转）','Fontsize',18);
-xlabel('样本编号','Fontsize',14)
-ylabel('标准化距离（average）','Fontsize',14)
+set(gca,'FontSize',15);
+xlabel('样本编号','Fontsize',24)
+ylabel('标准化距离','Fontsize',24)
+
 
 %由inconsistent得出最佳分类个数
 %计算深度：50
@@ -58,9 +59,10 @@ cluB
 %%
 %调和曲线
 figure();
-andrewsplot(X,'group',clu_n,'quantile',.25,'LineWidth',2)
-title('调和曲线（左转）','fontsize',16);
-ylabel('f(t)');
+andrewsplot(X,'group',clu_n,'quantile',.25,'LineWidth',2);
+set(gca,'FontSize',17);
+xlabel('t','Fontsize',18)
+ylabel('f(t)','Fontsize',18)
 
 %%
 %折线图
